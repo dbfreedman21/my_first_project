@@ -1,0 +1,40 @@
+# install the libraries:
+pip install requests beautifulsoup4 pandas
+
+# Find a Patent Website to Scrape
+# The United States Patent and Trademark Office (USPTO) or similar websites often have searchable patent databases. Look for sections on technology trends or specific filters like "ocean policy" patents.
+
+# USPTO
+# Google Patents
+
+#This example uses requests and BeautifulSoup to fetch patent data:
+
+import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+
+# Define the URL for the patent search
+url = "https://patents.google.com/?q=ocean+policy"  # Adjust for specific searches
+
+# Fetch the webpage
+
+response = requests.get(url)
+if response.status_code == 200:
+    print("Page fetched successfully!")
+else:
+    print("Failed to fetch the page. Check the URL.")
+
+# Parse the HTML
+soup = BeautifulSoup(response.content, 'html.parser')
+
+# Find patent titles and links (update selectors as per the website structure)
+patents = []
+for result in soup.find_all('div', class_='result-title'):  # Adjust class name to actual website
+    title = result.text.strip()
+    link = result.a['href']
+    patents.append({'Title': title, 'Link': link})
+
+# Save data to a CSV file
+df = pd.DataFrame(patents)
+df.to_csv('ocean_policy_patents.csv', index=False)
+print("Data saved to ocean_policy_patents.csv!")
