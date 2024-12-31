@@ -38,3 +38,79 @@ for result in soup.find_all('div', class_='result-title'):  # Adjust class name 
 df = pd.DataFrame(patents)
 df.to_csv('ocean_policy_patents.csv', index=False)
 print("Data saved to ocean_policy_patents.csv!")
+
+pip install selenium
+
+from selenium import webdriver
+
+# Set up Brave Browser
+options = webdriver.ChromeOptions()
+options.binary_location = "/path/to/brave"  # Replace with your Brave browser path
+driver = webdriver.Chrome(options=options)
+
+driver.get(url)
+html = driver.page_source
+soup = BeautifulSoup(html, 'html.parser')
+
+# The rest of the code remains the same
+
+# Import the required libraries
+import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+
+# Step 1: Define the URL for patent search
+url = "https://patents.google.com/?q=ocean+policy"
+
+# Step 2: Fetch the webpage
+response = requests.get(url)
+
+# Check if the webpage was fetched successfully
+if response.status_code == 200:
+    print("Page fetched successfully!")
+else:
+    print(f"Failed to fetch the page. Status code: {response.status_code}")
+    exit()
+
+# Step 3: Parse the HTML content using BeautifulSoup
+soup = BeautifulSoup(response.content, 'html.parser')
+
+# Step 4: Extract patent details
+patents = []  # List to store patent data
+
+# Find all patent entries (adjust the 'class_' value based on the website's structure)
+for result in soup.find_all('search-result-item'):  # Update 'search-result-item' based on actual tags
+    try:
+        title = result.find('a').text.strip()  # Extract the title
+        link = result.find('a')['href']  # Extract the link
+        patents.append({'Title': title, 'Link': f"https://patents.google.com{link}"})
+    except Exception as e:
+        print(f"Error parsing a result: {e}")
+
+# Step 5: Save the data to a CSV file
+if patents:
+    df = pd.DataFrame(patents)
+    df.to_csv('ocean_policy_patents.csv', index=False)
+    print("Data saved to 'ocean_policy_patents.csv'!")
+else:
+    print("No patents found. Check the scraper logic or the website's structure.")
+
+python patent_scraper.py
+
+Page fetched successfully!
+Data saved to 'ocean_policy_patents.csv'!
+
+Data saved to 'ocean_policy_patents.csv'!
+
+df.to_csv('C:/Users/YourUsername/Documents/ocean_policy_patents.csv', index=False)
+
+import os
+print(f"Current working directory: {os.getcwd()}")
+
+df.to_csv('C:/Users/YourUsername/Documents/ocean_policy_patents.csv', index=False)
+
+if os.path.exists('ocean_policy_patents.csv'):
+    print("CSV file successfully created!")
+else:
+    print("CSV file not found. Check your file path.")
+
