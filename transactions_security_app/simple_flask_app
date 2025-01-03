@@ -1,0 +1,47 @@
+from flask import Flask, render_template, request, redirect, url_for, flash
+from flask_sqlalchemy import SQLAlchemy
+
+app = Flask(__name__)
+app.secret_key = 'your_secret_key'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///donations.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+
+# Models
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(150), nullable=False)
+    email = db.Column(db.String(150), unique=True, nullable=False)
+    password = db.Column(db.String(150), nullable=False)
+
+class Nonprofit(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(150), nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    verified = db.Column(db.Boolean, default=False)
+
+class Donation(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    amount = db.Column(db.Float, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    nonprofit_id = db.Column(db.Integer, db.ForeignKey('nonprofit.id'), nullable=False)
+
+# Routes
+@app.route('/')
+def home():
+    nonprofits = Nonprofit.query.all()
+    return render_template('home.html', nonprofits=nonprofits)
+
+@app.route('/donate/<int:nonprofit_id>', methods=['GET', 'POST'])
+def donate(nonprofit_id):
+    if request.method == 'POST':
+        amount = float(request.form['amount'])
+        # Simulate donation logic here
+        flash(f'Donated ${amount} to Nonprofit ID {nonprofit_id}', 'success')
+        return redirect(url_for('home'))
+    nonprofit = Nonprofit.query.get(nonprofit_id)
+    return render_template('donate.html', nonprofit=nonprofit)
+
+if __name__ == '__main__':
+    app.run(debug=True)
