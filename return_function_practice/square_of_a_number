@@ -1,0 +1,7 @@
+#Create a function that takes a number as input and returns its square.
+
+def square_number(num: int) -> int:
+    return num ** 2
+
+print(square_number(10) == 100)
+print(square_number(3) == 9)
