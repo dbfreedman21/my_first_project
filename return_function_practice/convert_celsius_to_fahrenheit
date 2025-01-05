@@ -1,0 +1,8 @@
+#Write a function that converts a temperature from Celsius to Fahrenheit.
+#Formula: 𝐹=𝐶*9/5+32
+
+def celsius_to_fahrenheit(celsius: float) -> float:
+    return (celsius * 9 / 5) + 32
+
+print(celsius_to_fahrenheit(0) == 32)
+print(celsius_to_fahrenheit(12) == 45)
