@@ -1,14 +1,14 @@
 def is_even(num: int) -> bool:
-    # your code here
-    return None
+    # Check if the number is even
+    return num % 2 == 0
 
 
 print("Example:")
-print(is_even(2))
+print(is_even(2))  # Should print True
 
 # These "asserts" are used for self-checking
-assert is_even(2) == True
-assert is_even(5) == False
-assert is_even(0) == True
+assert is_even(2) == True  # Passes
+assert is_even(5) == False  # Passes
+assert is_even(0) == True  # Passes
 
 print("The mission is done! Click 'Check Solution' to earn rewards!")
