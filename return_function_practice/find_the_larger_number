@@ -1,0 +1,7 @@
+#Create a function that returns the larger of two numbers.
+
+def larger_number(a: int, b: int) -> int:
+    return a if a > b else b
+
+print(larger_number(30, 25) == 30)
+print(larger_number(5, 5) == 5)
