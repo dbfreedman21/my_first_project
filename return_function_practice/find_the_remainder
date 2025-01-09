@@ -1,0 +1,8 @@
+#Write a function that returns the remainder when one number is divided by another.
+
+def find_remainder(a: int, b: int) -> int:
+    return a % b
+
+print(find_remainder(10, 2))
+print(find_remainder(20, 4))
+print(find_remainder(5, 10))
