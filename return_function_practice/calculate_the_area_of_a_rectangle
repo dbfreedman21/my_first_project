@@ -1,0 +1,7 @@
+#Create a function that takes the width and height of a rectangle and returns its area.
+
+def rectangle_area(width: float, height: float) -> float:
+    return width * height
+
+print(rectangle_area(7, 3) == 21)
+print(rectangle_area(3.63, 6.94))
