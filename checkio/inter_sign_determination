@@ -1,0 +1,29 @@
+#Identify whether a given integer is positive, negative, or zero and return a respective string: "positive", "negative" or "zero".
+
+def determine_sign(num: int) -> str:
+    # Check if the number is zero, positive, or negative
+    if num == 0:
+        return "zero"
+    elif num > 0:
+        return "positive"
+    else:
+        return "negative"
+
+# Test cases
+print(determine_sign(-2))  # Output: "negative"
+print(determine_sign(11))  # Output: "positive"
+print(determine_sign(0))   # Output: "zero"
+
+# These "asserts" are used for self-checking
+assert determine_sign(5) == "positive"
+assert determine_sign(0) == "zero"
+assert determine_sign(-10) == "negative"
+assert determine_sign(1) == "positive"
+assert determine_sign(-1) == "negative"
+assert determine_sign(999) == "positive"
+assert determine_sign(-1000) == "negative"
+assert determine_sign(123456789) == "positive"
+assert determine_sign(-987654321) == "negative"
+assert determine_sign(2) == "positive"
+
+print("The mission is done! Click 'Check Solution' to earn rewards!")
