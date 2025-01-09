@@ -1,0 +1,7 @@
+#Write a function that checks if a number is positive. Return True if it is, and False otherwise.
+
+def is_positive(num: int) -> bool:
+    return num > 0
+
+print(is_positive(24))
+print(is_positive(-11))
