@@ -1,0 +1,11 @@
+#Write a function that takes three numbers and returns the largest.
+
+def largest_of_three(a: int, b: int, c: int) -> int:
+    if a > b and a > c:
+        return a
+    elif b > c:
+        return b
+    else:
+        return c
+print(largest_of_three(3, 7, 5))
+print(largest_of_three(-3, 2, 10))
