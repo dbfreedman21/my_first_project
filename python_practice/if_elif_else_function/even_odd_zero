@@ -1,0 +1,17 @@
+#Write a function that checks if a number is:
+
+#Zero: Return "zero".
+#Even: Return "even".
+#Odd: Return "odd".
+
+def check_number(num: int) -> str:
+    if num == 0:
+        return "zero"
+    elif num % 2 == 0:
+        return "even"
+    else:
+        return "odd"
+
+print(check_number(0))
+print(check_number(4))
+print(check_number(7))
