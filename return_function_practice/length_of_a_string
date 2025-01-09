@@ -1,0 +1,8 @@
+#Create a function that returns the length of a given string.
+
+def string_length(s: str) -> int:
+    return len(s)
+
+print(string_length("hello") == 5)
+print(string_length("") == 0)
+      
