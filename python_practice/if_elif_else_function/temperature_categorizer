@@ -1,0 +1,16 @@
+#Write a function that categorizes a temperature:
+
+def categorize_temperature(temp: int) -> str:
+    if temp < 0:
+        return "freezing" #Less than 0: "freezing"
+    elif temp <= 30:
+        return "cold" #Between 0 and 30 (inclusive): "cold"
+    elif temp <= 60:
+        return "warm" #Between 31 and 60 (inclusive): "warm"
+    else:
+        return "hot" #Greater than 60: "hot"
+
+print(categorize_temperature(-60))
+print(categorize_temperature(30))
+print(categorize_temperature(55))
+print(categorize_temperature(120))
