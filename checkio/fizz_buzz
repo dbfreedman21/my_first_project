@@ -1,0 +1,29 @@
+# Taken from mission Just Fizz!
+
+#You should write a function that will receive a positive integer and return: "Fizz" if the number is divisible by 3 (3, 6, 9 ...) otherwise convert the given number to a string (2 -> "2").
+def checkio(num: int) -> str:
+    #Check for "Fizz Buzz"
+    if num % 3 == 0 and num % 5 == 0:
+        return "Fizz Buzz"
+    #Check for "Fizz"
+    elif num % 3 == 0:
+        return "Fizz"
+    #Check for "Buzz"
+    elif num % 5 == 0:
+        return "Buzz"
+    #Otherwise return the number as a string
+    else:
+        return str(num)
+
+print(checkio(15))
+print(checkio(6))
+print(checkio(10))
+print(checkio(7))
+
+# These "asserts" are used for self-checking
+assert checkio(15) == "Fizz Buzz"
+assert checkio(6) == "Fizz"
+assert checkio(10) == "Buzz"
+assert checkio(7) == "7"
+
+print("The mission is done! Click 'Check Solution' to earn rewards!")
