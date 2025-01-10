@@ -1,0 +1,16 @@
+#Write a function that checks the range of a number:
+#If the number is less than 0, return "negative".
+#If the number is between 0 and 10 (inclusive), return "small".
+#If the number is greater than 10, return "large".
+
+def number_range(num: int) -> str:
+    if num < 0:
+        return "negative"
+    elif num <= 10:
+        return "small"
+    else:
+        return "large"
+
+print(number_range(-24))
+print(number_range(4))
+print(number_range(14))
