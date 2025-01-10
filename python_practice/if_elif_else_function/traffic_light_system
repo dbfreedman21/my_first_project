@@ -1,0 +1,20 @@
+#Write a function that takes a color ("red", "yellow", "green") and returns the action you should take:
+#"red": "Stop"
+#"yellow": "Caution"
+#"green": "Go"
+
+
+def traffic_light_action(color: str) -> str:
+    if color == "red":
+        return "Stop"
+    elif color == "yellow":
+        return "Caution"
+    elif color == "green":
+        return "Go"
+    else:
+        return "Invalid color"
+
+print(traffic_light_action("red"))
+print(traffic_light_action("yellow"))
+print(traffic_light_action("green"))
+                
