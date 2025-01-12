@@ -10,6 +10,9 @@ def parse_input(user_input: str):
         if len(parts) != 3:
             raise ValueError("Input must be in the format: <number> <operator> <number>")
         num1, operator, num2 = parts
+        if operator not in {"+", "-", "*", "/", "%", "//", "**"}:
+            print(f"Error: Unsupported operator '{operator}'. Supported operators: +, -, *, /, %, //, **")
+            return None, None, None
         return float(num1), operator, float(num2)
     except ValueError as e:
         print(f"Error: {e}")
@@ -51,7 +54,7 @@ def main():
     while True:
         user_input = input("Enter operation: ").strip()
         if user_input.lower() == "exit":
-            print("Goodbye!")
+            print("Thank you for using the CLI Calculator. Goodbye!")
             break
 
         if user_input.lower() == "history":
@@ -72,8 +75,15 @@ def main():
         try:
             result = calculate(num1, operator, num2)
             # Add the result to history
-            history.append(f"{num1} {operator} {num2} = {result}")
-            print(f"Result: {result}")
-        except Exception as e:
+            history.append(f"{num1:.2f} {operator} {num2:.2f} = {result:.2f}")
+            print(f"Result: {result:.2f}")
+        except ZeroDivisionError as e:
             print(f"Error: {e}")
+        except ValueError as e:
+            print(f"Error: {e}")
+        except Exception as e:
+            print(f"Unexpected error: {e}")
 
+
+if __name__ == "__main__":
+    main()
