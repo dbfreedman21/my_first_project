@@ -41,3 +41,20 @@ Use a loop to repeatedly accept user input until they choose to exit.
 Refactor for Scalability:
 Organize functions into a separate utils.py module if the code grows.
 
+Features Check
+1 Input Parsing (parse_input)
+✅ Splits input into numbers and operator.
+✅ Handles invalid inputs (e.g., wrong format).
+✅ Returns None for invalid input, so the program can handle it gracefully.
+2 Calculation Logic (calculate)
+✅ Supports all required operators: +, -, *, /, %, //, **.
+✅ Handles division by zero with a ZeroDivisionError.
+✅ Raises an error for unsupported operators.
+3 Main Loop (main)
+✅ Greets the user and displays instructions.
+✅ Includes a history feature.
+✅ Allows users to quit with exit.
+4 History Tracking
+✅ Maintains a list of past calculations.
+✅ Displays history when the user enters history.
+✅ Handles cases where no calculations have been performed.
