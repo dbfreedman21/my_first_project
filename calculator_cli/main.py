@@ -43,7 +43,10 @@ def calculate(num1: float, operator: str, num2: float) -> float:
 def main():
     print("Welcome to the CLI Calculator!")
     print("Supported operators: +, -, *, /, %, //, **")
-    print("Type 'exit' to quit.")
+    print("Type 'history' to view past calculations or 'exit' to quit.")
+
+    # Initialize the history list
+    history = []
 
     while True:
         user_input = input("Enter operation: ").strip()
@@ -51,17 +54,26 @@ def main():
             print("Goodbye!")
             break
 
-        # Parse and calculate
+        if user_input.lower() == "history":
+            # Display the history of calculations
+            print("Calculation History:")
+            if history:
+                for entry in history:
+                    print(entry)
+            else:
+                print("No calculations yet.")
+            continue
+
+        # Parse and calculate the input
         num1, operator, num2 = parse_input(user_input)
         if num1 is None:
             continue
 
         try:
             result = calculate(num1, operator, num2)
+            # Add the result to history
+            history.append(f"{num1} {operator} {num2} = {result}")
             print(f"Result: {result}")
         except Exception as e:
             print(f"Error: {e}")
 
-
-if __name__ == "__main__":
-    main()
