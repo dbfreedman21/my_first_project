@@ -8,11 +8,20 @@ Before diving into coding, define the functionality:
 Basic Operations:
 Addition (+), subtraction (-), multiplication (*), division (/).
 
+## Features
+- Basic operations: `+`, `-`, `*`, `/`
+- Advanced operations: `%` (modulus), `//` (floor division), `**` (exponentiation)
+- Error handling for invalid input and division by zero
+- View calculation history
 
 Input and Output:
 Accept user input in the form: 5 + 3.
 Display the result: 8.
 
+## Usage Examples
+- `5 % 2` → `1`
+- `10 // 3` → `3`
+- `2 ** 3` → `8`
 
 Error Handling:
 Invalid input: "5 & 3" → Show an error message.
