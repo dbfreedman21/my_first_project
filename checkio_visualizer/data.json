@@ -1,0 +1,10 @@
+# A sample data file to store your CheckiO progress.
+
+{
+    "missions": [
+      {"name": "Fizz Buzz", "difficulty": "easy", "completed": "2025-01-10"},
+      {"name": "The Stones", "difficulty": "hard", "completed": "2025-01-12"},
+      {"name": "Multiply Digits", "difficulty": "medium", "completed": "2025-01-15"}
+    ]
+  }
+  
