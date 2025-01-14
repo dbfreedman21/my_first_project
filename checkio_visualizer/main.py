@@ -13,10 +13,8 @@ def load_data(filename="data.json"):
     try:
         with open(filename, "r") as f:
             data = json.load(f)
-            # Ensure the "missions" key exists and is a list
-            if "missions" not in data or not isinstance(data["missions"], list):
-                print("Warning: Invalid JSON structure. Resetting data.")
-                return {"missions": []}
+            # Remove entries with missing or invalid difficulties
+            data["missions"] = [m for m in data["missions"] if m.get("difficulty") in {"easy", "medium", "hard"}]
             return data
     except FileNotFoundError:
         print("Warning: data.json not found. Creating a new file.")
@@ -24,6 +22,7 @@ def load_data(filename="data.json"):
     except json.JSONDecodeError:
         print("Warning: data.json is invalid. Resetting data.")
         return {"missions": []}
+
 
 
 def save_data(data, filename="data.json"):
@@ -88,8 +87,12 @@ def plot_completion_times(data):
 
 # Display Summary of Missions
 def display_summary(data):
+    if not data["missions"]:
+        print("\nNo missions found to summarize.")
+        return
+
     total_missions = len(data["missions"])
-    difficulty_counts = Counter(m["difficulty"] for m in data["missions"])
+    difficulty_counts = Counter(m["difficulty"] for m in data["missions"] if m.get("difficulty"))
 
     print("\nProgress Summary:")
     print(f"Total Missions Completed: {total_missions}")
