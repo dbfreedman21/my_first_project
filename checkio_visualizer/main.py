@@ -4,6 +4,8 @@ from collections import Counter
 import plotly.express as px
 import json
 import re  # For date validation
+import pandas as pd  # For data handling
+import csv  # For exporting data
 
 
 # Load and Save Data
@@ -58,6 +60,21 @@ def plot_difficulty_pie_chart(data):
     fig.show()
 
 
+# Completion Time Analysis
+def plot_completion_times(data):
+    df = pd.DataFrame(data["missions"])
+    fig = px.box(
+        df,
+        x="difficulty",
+        y="time_taken",
+        title="Completion Time by Difficulty",
+        color="difficulty",
+        color_discrete_map={"easy": "green", "medium": "orange", "hard": "red"}
+    )
+    fig.update_traces(boxmean=True)
+    fig.show()
+
+
 # Display Summary of Missions
 def display_summary(data):
     total_missions = len(data["missions"])
@@ -75,6 +92,7 @@ def search_missions(data):
     print("\nSearch Missions:")
     print("1. Search by Name")
     print("2. Filter by Category")
+    print("3. Search by Completion Date Range")
     choice = input("Enter your choice: ").strip()
 
     if choice == "1":
@@ -83,6 +101,10 @@ def search_missions(data):
     elif choice == "2":
         category = input("Enter category to filter by: ").strip().lower()
         results = [m for m in data["missions"] if category == m["category"].lower()]
+    elif choice == "3":
+        start_date = input("Enter start date (YYYY-MM-DD): ").strip()
+        end_date = input("Enter end date (YYYY-MM-DD): ").strip()
+        results = [m for m in data["missions"] if start_date <= m["completed"] <= end_date]
     else:
         print("Invalid choice. Returning to main menu.")
         return
@@ -90,8 +112,21 @@ def search_missions(data):
     if results:
         print("\nSearch Results:")
         display_table({"missions": results})
+        export_option = input("Do you want to export the results to a CSV file? (yes/no): ").strip().lower()
+        if export_option == "yes":
+            export_to_csv(results)
     else:
         print("\nNo missions found.")
+
+
+# Export Data to CSV
+def export_to_csv(data, filename="exported_data.csv"):
+    keys = data[0].keys()
+    with open(filename, "w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=keys)
+        writer.writeheader()
+        writer.writerows(data)
+    print(f"Data exported to {filename}")
 
 
 # Add New Mission with Validation
@@ -141,10 +176,11 @@ def main():
         print("1. View Progress (Table)")
         print("2. View Progress (Bar Chart - Matplotlib)")
         print("3. View Progress (Pie Chart - Plotly)")
-        print("4. Add New Mission")
-        print("5. View Summary")
-        print("6. Search Missions")
-        print("7. Exit")
+        print("4. Analyze Completion Times")
+        print("5. Add New Mission")
+        print("6. View Summary")
+        print("7. Search Missions")
+        print("8. Exit")
 
         choice = input("Enter your choice: ").strip()
 
@@ -155,12 +191,14 @@ def main():
         elif choice == "3":
             plot_difficulty_pie_chart(data)
         elif choice == "4":
-            add_new_mission(data)
+            plot_completion_times(data)
         elif choice == "5":
-            display_summary(data)
+            add_new_mission(data)
         elif choice == "6":
-            search_missions(data)
+            display_summary(data)
         elif choice == "7":
+            search_missions(data)
+        elif choice == "8":
             print("Goodbye!")
             break
         else:
