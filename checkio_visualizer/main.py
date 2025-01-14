@@ -12,10 +12,12 @@ import csv  # For exporting data
 def load_data(filename="data.json"):
     try:
         with open(filename, "r") as f:
-            return json.load(f)
+            data = json.load(f)
+            # Remove invalid entries
+            data["missions"] = [m for m in data["missions"] if m.get("difficulty") in {"easy", "medium", "hard"}]
+            return data
     except FileNotFoundError:
         return {"missions": []}
-
 
 def save_data(data, filename="data.json"):
     with open(filename, "w") as f:
@@ -33,11 +35,11 @@ def display_table(data):
 
 # Static Bar Chart
 def plot_difficulty_distribution(data):
-    difficulties = [mission["difficulty"] for mission in data["missions"]]
+    difficulties = [mission["difficulty"] for mission in data["missions"] if mission["difficulty"].strip()]
     counts = Counter(difficulties)
 
     colors = {"easy": "green", "medium": "orange", "hard": "red"}
-    bar_colors = [colors[d] for d in counts.keys()]
+    bar_colors = [colors.get(d, "gray") for d in counts.keys()]  # Use "gray" for missing or unknown difficulties
 
     plt.bar(counts.keys(), counts.values(), color=bar_colors)
     plt.title("CheckiO Missions by Difficulty", fontsize=14)
