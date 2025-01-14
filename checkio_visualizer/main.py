@@ -13,15 +13,24 @@ def load_data(filename="data.json"):
     try:
         with open(filename, "r") as f:
             data = json.load(f)
-            # Remove invalid entries
-            data["missions"] = [m for m in data["missions"] if m.get("difficulty") in {"easy", "medium", "hard"}]
+            # Ensure the "missions" key exists and is a list
+            if "missions" not in data or not isinstance(data["missions"], list):
+                print("Warning: Invalid JSON structure. Resetting data.")
+                return {"missions": []}
             return data
     except FileNotFoundError:
+        print("Warning: data.json not found. Creating a new file.")
         return {"missions": []}
+    except json.JSONDecodeError:
+        print("Warning: data.json is invalid. Resetting data.")
+        return {"missions": []}
+
 
 def save_data(data, filename="data.json"):
     with open(filename, "w") as f:
         json.dump(data, f, indent=4)
+    print(f"Data saved to {filename}.")
+
 
 
 # Display Data as Table
