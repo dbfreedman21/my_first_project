@@ -11,6 +11,11 @@ def load_data(filename="data.json"):
     except FileNotFoundError:
         return {"missions": []}
 
+# Save data
+def save_data(data, filename="data.json"):
+    with open(filename, "w") as f:
+        json.dump(data, f, indent=4)
+
 # Main app
 def main():
     data = load_data()
@@ -32,35 +37,31 @@ def main():
     # Pie Chart
     st.write("## Difficulty Distribution (Pie Chart)")
     if not df.empty:
-        fig = px.pie(
-            df,
-            names="difficulty",
-            title="CheckiO Missions by Difficulty",
-            color="difficulty",
-            color_discrete_map={"easy": "green", "medium": "orange", "hard": "red"}
-        )
+        fig = px.pie(df, names='difficulty', title='Difficulty Distribution')
         st.plotly_chart(fig)
 
-    # Add New Mission
+    # Form to Add New Mission
     st.write("## Add New Mission")
-    with st.form("Add Mission"):
-        name = st.text_input("Mission Name")
+    with st.form(key='add_mission_form'):
+        name = st.text_input("Name")
         difficulty = st.selectbox("Difficulty", ["easy", "medium", "hard"])
         category = st.text_input("Category")
-        completed = st.date_input("Completion Date").strftime("%Y-%m-%d")
-        time_taken = st.number_input("Time Taken (in minutes)", min_value=1)
-        submitted = st.form_submit_button("Add Mission")
-        if submitted:
-            data["missions"].append({
+        completed = st.text_input("Completed")
+        time_taken = st.number_input("Time Taken (min)", min_value=0)
+        submit_button = st.form_submit_button(label='Add Mission')
+
+        if submit_button:
+            new_mission = {
                 "name": name,
                 "difficulty": difficulty,
                 "category": category,
                 "completed": completed,
                 "time_taken": time_taken
-            })
-            with open("data.json", "w") as f:
-                json.dump(data, f, indent=4)
+            }
+            data["missions"].append(new_mission)
+            save_data(data)
             st.success("Mission added successfully!")
+            st.experimental_rerun()
 
 if __name__ == "__main__":
     main()
