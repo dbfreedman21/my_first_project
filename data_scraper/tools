@@ -9,7 +9,7 @@ pip install requests beautifulsoup4 pandas
 
 #This example uses requests and BeautifulSoup to fetch patent data:
 
-import requests
+import httpx as requests
 from bs4 import BeautifulSoup
 import pandas as pd
 
