@@ -1,0 +1,23 @@
+def translation(text: str) -> str:
+    result = []
+    i = 0
+    while i < len(text):
+        result.append(text[i])
+        if text[i] in "aeiouy":
+            i += 3
+        elif text[i] == ' ':
+            i += 1
+        else:
+            i += 2
+    return ''.join(result)
+
+print("Example:")
+print(translation("hieeelalaooo"))
+
+# These "asserts" are used for self-checking
+assert translation("hieeelalaooo") == "hello"
+assert translation("hoooowe yyyooouuu duoooiiine") == "how you doin"
+assert translation("aaa bo cy da eee fe") == "a b c d e f"
+assert translation("sooooso aaaaaaaaa") == "sos aaa"
+
+print("The mission is done! Click 'Check Solution' to earn rewards!")
