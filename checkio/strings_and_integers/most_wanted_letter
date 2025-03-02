@@ -1,0 +1,28 @@
+def checkio(text: str) -> str:
+    from collections import Counter
+    import string
+
+    # Convert text to lowercase and filter out non-alphabetic characters
+    filtered_text = [char for char in text.lower() if char in string.ascii_lowercase]
+    
+    # Count the frequency of each character
+    counter = Counter(filtered_text)
+    
+    # Find the most common character (in case of tie, return the lexicographically smallest one)
+    most_common = counter.most_common()
+    most_common.sort(key=lambda x: (-x[1], x[0]))
+    
+    return most_common[0][0]
+
+print("Example:")
+print(checkio("Hello World!"))
+
+# These "asserts" are used for self-checking
+assert checkio("Hello World!") == "l"
+assert checkio("How do you do?") == "o"
+assert checkio("One") == "e"
+assert checkio("Oops!") == "o"
+assert checkio("AAaooo!!!!") == "a"
+assert checkio("abe") == "a"
+
+print("The mission is done! Click 'Check Solution' to earn rewards!")

@@ -1,0 +1,32 @@
+from collections.abc import Iterable
+from typing import Union
+import math
+
+def quadratic_roots(a: int, b: int, c: int) -> Iterable[Union[int, float, str]]:
+    discriminant = b**2 - 4*a*c
+    if discriminant > 0:
+        root1 = (-b + math.sqrt(discriminant)) / (2*a)
+        root2 = (-b - math.sqrt(discriminant)) / (2*a)
+        return [root1, root2]
+    elif discriminant == 0:
+        root = -b / (2*a)
+        return [root, root]
+    else:
+        return ["No real roots"]
+
+print("Example:")
+print(list(quadratic_roots(1, 2, 3)))
+
+# These "asserts" are used for self-checking
+assert list(quadratic_roots(1, -3, 2)) == [2, 1]
+assert list(quadratic_roots(1, 0, -1)) == [1, -1]
+assert list(quadratic_roots(1, 2, 1)) == [-1, -1]
+assert list(quadratic_roots(1, 0, 1)) == ["No real roots"]
+assert list(quadratic_roots(1, 4, 4)) == [-2, -2]
+assert list(quadratic_roots(1, -5, 6)) == [3, 2]
+assert list(quadratic_roots(1, -6, 9)) == [3, 3]
+assert list(quadratic_roots(2, 2, 1)) == ["No real roots"]
+assert list(quadratic_roots(2, -7, 6)) == [2, 1.5]
+assert list(quadratic_roots(2, -3, 1)) == [1, 0.5]
+
+print("The mission is done! Click 'Check Solution' to earn rewards!")

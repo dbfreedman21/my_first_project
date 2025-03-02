@@ -1,0 +1,17 @@
+def column_number(name: str) -> int:
+    result = 0
+    for char in name:
+        result = result * 26 + (ord(char) - ord('A') + 1)
+    return result
+
+
+print("Example:")
+print(column_number("AA"))
+
+# These "asserts" are used for self-checking
+assert column_number("A") == 1
+assert column_number("Z") == 26
+assert column_number("AB") == 28
+assert column_number("ZY") == 701
+
+print("The first mission is done! Click 'Check' to earn cool rewards!")

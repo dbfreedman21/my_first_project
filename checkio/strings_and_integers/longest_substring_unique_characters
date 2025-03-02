@@ -1,0 +1,27 @@
+def longest_substr(s: str) -> int:
+    char_map = {}
+    left = 0
+    max_length = 0
+
+    for right in range(len(s)):
+        if s[right] in char_map:
+            left = max(left, char_map[s[right]] + 1)
+        char_map[s[right]] = right
+        max_length = max(max_length, right - left + 1)
+
+    return max_length
+
+
+print("Example:")
+print(longest_substr("abcabcbb"))
+
+# These "asserts" are used for self-checking
+assert longest_substr("abcabcbb") == 3
+assert longest_substr("bbbbb") == 1
+assert longest_substr("pwwkew") == 3
+assert longest_substr("abcdef") == 6
+assert longest_substr("") == 0
+assert longest_substr("au") == 2
+assert longest_substr("dvdf") == 3
+
+print("The mission is done! Click 'Check Solution' to earn rewards!")

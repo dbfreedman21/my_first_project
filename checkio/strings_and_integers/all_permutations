@@ -1,5 +1,5 @@
+from collections.abc import Iterable
 from itertools import permutations
-from typing import Iterable
 
 def string_permutations(s: str) -> Iterable[str]:
     return sorted(set(''.join(p) for p in permutations(s)))
@@ -37,9 +37,6 @@ assert list(string_permutations("abcd")) == [
     "dcab",
     "dcba",
 ]
-def new_func(string_permutations):
-    assert list(string_permutations("aab")) == ["aab", "aba", "baa"]
-
-new_func(string_permutations)
+assert list(string_permutations("aab")) == ["aab", "aba", "baa"]
 
 print("The mission is done! Click 'Check Solution' to earn rewards!")
