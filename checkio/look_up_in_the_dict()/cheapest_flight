@@ -1,0 +1,60 @@
+import heapq
+from collections import defaultdict
+
+def cheapest_flight(costs: list, a: str, b: str) -> int:
+    graph = defaultdict(list)
+    for start, end, cost in costs:
+        graph[start].append((cost, end))
+        graph[end].append((cost, start))
+    
+    queue = [(0, a)]
+    visited = set()
+    
+    while queue:
+        current_cost, node = heapq.heappop(queue)
+        if node in visited:
+            continue
+        visited.add(node)
+        if node == b:
+            return current_cost
+        for cost, neighbor in graph[node]:
+            if neighbor not in visited:
+                heapq.heappush(queue, (current_cost + cost, neighbor))
+    
+    return 0
+
+print("Example:")
+print(cheapest_flight([["A", "C", 100], ["A", "B", 20], ["B", "C", 50]], "A", "C"))
+
+# These "asserts" are used for self-checking
+assert (
+    cheapest_flight([["A", "C", 100], ["A", "B", 20], ["B", "C", 50]], "A", "C") == 70
+)
+assert (
+    cheapest_flight([["A", "C", 100], ["A", "B", 20], ["B", "C", 50]], "C", "A") == 70
+)
+assert (
+    cheapest_flight(
+        [
+            ["A", "C", 40],
+            ["A", "B", 20],
+            ["A", "D", 20],
+            ["B", "C", 50],
+            ["D", "C", 70],
+        ],
+        "D",
+        "C",
+    )
+    == 60
+)
+assert (
+    cheapest_flight([["A", "C", 100], ["A", "B", 20], ["D", "F", 900]], "A", "F") == 0
+)
+assert (
+    cheapest_flight(
+        [["A", "B", 10], ["A", "C", 15], ["B", "D", 15], ["C", "D", 10]], "A", "D"
+    )
+    == 25
+)
+
+print("The mission is done! Click 'Check Solution' to earn rewards!")
