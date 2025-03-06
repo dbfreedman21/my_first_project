@@ -1,0 +1,86 @@
+def distribute_blood(
+    blood_avail: dict[str, int], blood_needs: dict[str, int]
+) -> dict[str, dict[str, int]]:
+    distribution = {key: {"A": 0, "B": 0, "AB": 0, "O": 0} for key in blood_avail}
+
+    for blood_type in blood_needs:
+        need = blood_needs[blood_type]
+        if blood_type == "A":
+            if blood_avail["A"] >= need:
+                distribution["A"]["A"] = need
+                blood_avail["A"] -= need
+            else:
+                distribution["A"]["A"] = blood_avail["A"]
+                need -= blood_avail["A"]
+                blood_avail["A"] = 0
+                if blood_avail["O"] >= need:
+                    distribution["O"]["A"] = need
+                    blood_avail["O"] -= need
+                else:
+                    distribution["O"]["A"] = blood_avail["O"]
+                    blood_avail["O"] = 0
+        elif blood_type == "B":
+            if blood_avail["B"] >= need:
+                distribution["B"]["B"] = need
+                blood_avail["B"] -= need
+            else:
+                distribution["B"]["B"] = blood_avail["B"]
+                need -= blood_avail["B"]
+                blood_avail["B"] = 0
+                if blood_avail["O"] >= need:
+                    distribution["O"]["B"] = need
+                    blood_avail["O"] -= need
+                else:
+                    distribution["O"]["B"] = blood_avail["O"]
+                    blood_avail["O"] = 0
+        elif blood_type == "AB":
+            if blood_avail["AB"] >= need:
+                distribution["AB"]["AB"] = need
+                blood_avail["AB"] -= need
+            else:
+                distribution["AB"]["AB"] = blood_avail["AB"]
+                need -= blood_avail["AB"]
+                blood_avail["AB"] = 0
+                if blood_avail["A"] >= need:
+                    distribution["A"]["AB"] = need
+                    blood_avail["A"] -= need
+                else:
+                    distribution["A"]["AB"] = blood_avail["A"]
+                    need -= blood_avail["A"]
+                    blood_avail["A"] = 0
+                    if blood_avail["B"] >= need:
+                        distribution["B"]["AB"] = need
+                        blood_avail["B"] -= need
+                    else:
+                        distribution["B"]["AB"] = blood_avail["B"]
+                        need -= blood_avail["B"]
+                        blood_avail["B"] = 0
+                        if blood_avail["O"] >= need:
+                            distribution["O"]["AB"] = need
+                            blood_avail["O"] -= need
+                        else:
+                            distribution["O"]["AB"] = blood_avail["O"]
+                            blood_avail["O"] = 0
+
+    return distribution
+
+
+if __name__ == "__main__":
+    assert distribute_blood(
+        {"A": 150, "B": 100, "AB": 0, "O": 0}, {"A": 100, "B": 100, "AB": 50, "O": 0}
+    ) == {
+        "A": {"A": 100, "B": 0, "AB": 50, "O": 0},
+        "B": {"A": 0, "B": 100, "AB": 0, "O": 0},
+        "AB": {"A": 0, "B": 0, "AB": 0, "O": 0},
+        "O": {"A": 0, "B": 0, "AB": 0, "O": 0},
+    }
+    assert distribute_blood(
+        {"A": 10, "B": 10, "AB": 20, "O": 20}, {"A": 20, "B": 10, "AB": 30, "O": 0}
+    ) == {
+        "A": {"A": 10, "B": 0, "AB": 0, "O": 0},
+        "B": {"A": 0, "B": 10, "AB": 0, "O": 0},
+        "AB": {"A": 0, "B": 0, "AB": 20, "O": 0},
+        "O": {"A": 10, "B": 0, "AB": 10, "O": 0},
+    }
+
+    print("Coding complete? Click 'Check' to earn cool rewards!")
